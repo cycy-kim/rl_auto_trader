@@ -1,0 +1,29 @@
+api:
+  base_url:
+    real: "https://openapi.koreainvestment.com:9443"
+    virtual: "https://openapivts.koreainvestment.com:29443"
+
+  auth:
+    endpoint: "/oauth2/tokenP"
+  
+  order:
+    endpoint: "/uapi/domestic-stock/v1/trading/order-cash"
+    tr_id:
+      real:
+       buy: "TTTC0802U"
+       sell: "TTTC0801U"
+      virtual:
+       buy: "VTTC0802U"
+       sell: "VTTC0801U"
+
+  balance_inquiry:
+    endpoint: "/uapi/domestic-stock/v1/trading/inquire-balance"
+    tr_id:
+      real: "TTTC8434R"
+      virtual: "VTTC8434R"
+  
+  price_inquiry:
+    endpoint: "/uapi/domestic-stock/v1/quotations/inquire-time-itemchartprice"
+    tr_id:
+      real: "FHKST03010200"
+      virtual: "FHKST03010200"
