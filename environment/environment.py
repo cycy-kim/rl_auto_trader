@@ -4,13 +4,11 @@ from abc import abstractmethod
 from utils.data_utils import scale, z_score_normalize, min_max_scale
 
 class Environment():
-    # 어차피 삼전으로만 할거긴한데..
-    # 보유 잔고, 보유 주식 수, 평단가 3
-    # 시간, 시가, 저가, 고가, 종가, 거래량 6
-    # 나머지 이동평균 10 (120 제외)
+    # 보유 잔고, 보유 주식 수, 평단가        -> 3
+    # 시간, 시가, 저가, 고가, 종가, 거래량   -> 6
+    # 나머지 이동평균 (120 제외)            -> 8
     STATE_SPACE = 3 + 6 + 8
 
-    # BUY, SELL, HOLD
     BUY = 0
     SELL = 1
     HOLD = 2
@@ -19,8 +17,7 @@ class Environment():
 
     ACTION_THRESHOLD = 0.5
 
-
-    # 사용할 hts에 맞게 수정해야함
+    # 사용할 hts에 맞게 수정
     TRADING_CHARGE = 0.00015  # 거래 수수료
     TRADING_TAX = 0.0025  # 거래세
 
@@ -40,10 +37,9 @@ class Environment():
         self.observation = None
         self.idx = -1
 
-        # 초기화할 때 사용
         self.initial_balance = initial_balance
         self.previous_portfolio_value = initial_balance
-        # 포트폴리오 가치 = balance + stock_quantity * avg_purchase_price
+        # 포트폴리오 가치 = balance + stock_quantity * _get_price()
         self.balance = initial_balance
         self.stock_quantity = 0
         self.avg_purchase_price = 0
@@ -109,11 +105,6 @@ class Environment():
         next_state = self._get_state()
 
         reward = self._get_reward()
-
-        # print("action_mode : " + str(action_mode))
-        # print("quantity : " + str(quantity))
-        # print("reward : " + str(reward))
-        # print("-----")
         
         done = self._is_done(next_state)
 

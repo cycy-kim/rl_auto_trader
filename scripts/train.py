@@ -40,24 +40,10 @@ def train(data_name, initial_balance, log=True, **params):
             
             state = next_state
             minutes += 1
-            # print('state : ' + str(state))
-            # print('action : ' + str(action))
-            # print('reward : ' + str(reward))
-            # print('total minutes : ' + str(minutes))
-            # print('----')
-
+            
         portfolio_value = env.get_portfolio_value()
-        print('---episode' + str(episode) + ' finished---')
-        print('total_reward : ' +str(total_reward))
-        # print('balance : ' +str(env.balance))
-        # print('stock_quantity : ' +str(env.stock_quantity))
-        # print('avg_purchase_price : ' +str(env.avg_purchase_price))
-        # print('Portfolio Value : ' + str(portfolio_value))
-        print('num buy, sell , hold : ' + str(env.num_buy) + ' ' + str(env.num_sell) + ' ' + str(env.num_hold))
-        print('std_dev of gaussian noise : ' + str(agent.exploration_noise.std_dev))
-        # print('----')
-        # writer.add_scalar('Total Reward', total_reward, episode)
         writer.log_scalar('Portfolio Value', portfolio_value, episode)
+
         # 하루가 끝날때마다(episode가 끝날때마다) train
         # if len(agent.replay_buffer) > batch_size:
         agent.train()

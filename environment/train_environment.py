@@ -29,13 +29,11 @@ class TrainEnvironment(Environment):
     def _act(self, action):
         action_mode = np.argmax(action)
         action_ratio = (action[action_mode] - self.ACTION_THRESHOLD) / (1 - self.ACTION_THRESHOLD)
-        # action_ratio = 1
 
         if action_ratio < 0:
             action_mode = self.HOLD
         quantity = 0
-        # 나중에 api랑 연결했을땐 실제로 구매하도록 바꿔야함
-        # util에 구현하면 될듯
+        
         if action_mode == self.BUY:
             self.num_buy += 1
             cur_stock_price = self._get_price()

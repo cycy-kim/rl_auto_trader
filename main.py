@@ -83,6 +83,5 @@ if __name__ == "__main__":
         print("Testing finished")
     elif args.mode == 'predict':
         print("Start prediction...")
-        # predict(env=args.environment)
         predict(env=args.environment, model=args.model, ticker_symbol=args.ticker_symbol, log=args.log)
         print("Prediction finished")

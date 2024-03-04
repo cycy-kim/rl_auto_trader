@@ -24,7 +24,6 @@ def backtest(data_name, initial_balance, log=True):
 
     for episode in range(total_episode):
         done = False
-        # env.reset()
         state = env.initial_state
         total_reward = 0
         minutes = 1
@@ -39,24 +38,10 @@ def backtest(data_name, initial_balance, log=True):
                 break
             total_reward += reward
             
-            # print('state : ' + str(state))
-            print('action : ' + str(action))
-            print('reward : ' + str(reward))
-            print('total minutes : ' + str(minutes))
-            print('----')
             state = next_state
             minutes += 1
 
         portfolio_value = env.get_portfolio_value()
-        print('---episode' + str(episode) + ' finished---')
-        print('total_reward : ' +str(total_reward))
-        print('balance : ' +str(env.balance))
-        print('stock_quantity : ' +str(env.stock_quantity))
-        print('avg_purchase_price : ' +str(env.avg_purchase_price))
-        print('Portfolio Value : ' + str(portfolio_value))
-        print('num buy, sell , hold : ' + str(env.num_buy) + ' ' + str(env.num_sell) + ' ' + str(env.num_hold))
-        print('----')
-        
         writer.log_scalar('Portfolio Value', portfolio_value, episode)
 
         if finished:
