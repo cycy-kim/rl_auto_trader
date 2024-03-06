@@ -60,14 +60,14 @@ if __name__ == "__main__":
         data_path = os.path.join('data', args.data_name)
         assert os.path.isfile(data_path), f"The data file '{args.data_name}' does not exist in the 'data/' directory."
 
-    train_hyperparameters={
-        'sequence_length' : args.sequence_length,
-        'iterations' : args.iterations,
-        'batch_size' : args.batch_size,
-        'discount' : args.discount,
-        'tau' : args.tau,
-        'noise_clip' : args.noise_clip,
-        'policy_freq' : args.policy_freq,
+    train_hyperparameters = {
+        'sequence_length': getattr(args, 'sequence_length', 8),
+        'iterations': getattr(args, 'iterations', 100),
+        'batch_size': getattr(args, 'batch_size', 100),
+        'discount': getattr(args, 'discount', 0.99),
+        'tau': getattr(args, 'tau', 0.005),
+        'noise_clip': getattr(args, 'noise_clip', 0.7),
+        'policy_freq': getattr(args, 'policy_freq', 2),
     }
 
     load_dotenv()

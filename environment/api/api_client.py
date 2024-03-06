@@ -12,7 +12,7 @@ class APIClient:
         self.api_config = self._get_api_config()
 
         self.trading_env = trading_env
-        self.account_number = os.getenv('ACCOUNT_NO', None)
+        self.account_number = os.getenv(f'ACCOUNT_NO_{trading_env}', None)
         self.appkey = os.getenv('APPKEY', None)
         self.appsecret = os.getenv('APPSECRET', None)
         self.base_url = self.api_config['api']['base_url'][self.trading_env]

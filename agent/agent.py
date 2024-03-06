@@ -45,7 +45,6 @@ class TD3Agent:
 
 
     def select_action(self, state, add_noise=True):
-        print("state :" + str(state))
         state = torch.FloatTensor(state).unsqueeze(0).to(self.device)
         action_values, _ = self.actor(state)
         if add_noise:
