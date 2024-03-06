@@ -27,19 +27,19 @@ APPSECRET=your_appsecret
 ## 사용예시
 ### train mode
 ```cmd
-python main.py train --data_name 삼성전자_분봉_1년.csv --initial_balance 10000 --sequence_length 8 --iterations 100 --batch_size 100 --discount 0.99 --tau 0.005 --noise_clip 0.7 --policy_freq 2 --log
+python main.py --log train --data_name 삼성전자_분봉_1년.csv --initial_balance 1000000 --sequence_length 8 --iterations 100 --batch_size 100 --discount 0.99 --tau 0.005 --noise_clip 0.7 --policy_freq 2
 ```
 ### test mode
 ```cmd
-python main.py test --data_name 삼성전자_분봉_2024-01-29-.csv --initial_balance 10000 --log
+python main.py --log test --data_name 삼성전자_분봉_2024-01-29-.csv --initial_balance 1000000
 ```
 ### predict mode
 predict 모드는 실행되는 동안 학습된 모델을 사용하여 해당 종목에 대해 매 분마다 자동 매매를 진행합니다.
 #### 모의투자
 ```cmd
-python main.py predict --environment virtual --model td3_model_260 --ticker_symbol 005930
+python main.py --log predict --environment virtual --model td3_model_260 --ticker_symbol 005930
 ```
 #### 실전투자
 ```cmd
-python main.py predict --environment real --model td3_model_260 --ticker_symbol 005930
+python main.py --log predict --environment real --model td3_model_260 --ticker_symbol 005930
 ```
