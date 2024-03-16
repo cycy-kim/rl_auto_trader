@@ -1,4 +1,8 @@
-from agent.agent import TD3Agent
+import numpy as np
+
+from agents.ddpg_agent import DDPGAgent
+from agents.td3_agent import TD3Agent
+from agents.ppo_agent import PPOAgent
 from environment.train_environment import TrainEnvironment
 from utils.data_utils import load_data
 from utils.visualizer import TensorBoardLogger
@@ -15,8 +19,9 @@ def train(data_name, initial_balance, log=True, **params):
     action_dim = env.ACTION_SPACE
 
     # TD3 에이전트 생성
-    agent = TD3Agent(state_dim, action_dim, **params)
-
+    # agent = TD3Agent(state_dim, action_dim, **params)
+    # agent = PPOAgent(state_dim, action_dim, **params)
+    agent = DDPGAgent(state_dim, action_dim, **params)
     total_episode = 10000  # 총 학습 반복 횟수
 
     # 학습 루프
@@ -28,31 +33,31 @@ def train(data_name, initial_balance, log=True, **params):
         minutes = 1
         finished = False
         while not done:
-            action = agent.select_action(state)
+
+            action = agent.select_action(state) # TD3, DDPG, SAC
+            # action, value_pred, log_prob = agent.select_action(state) # PPO
+            
             next_state, reward, done = env.step(action)
             if next_state is None:
                 finished = True
                 break
             
             total_reward += reward
-
-            agent.replay_buffer.append(state, action, reward, next_state, done)
+            agent.store_transition(state, action, reward, next_state, done) # TD3, DDPG, SAC
+            # agent.store_transition(state, np.argmax(action), reward, value_pred, log_prob, next_state, done) # PPO
             
             state = next_state
             minutes += 1
-            
+
         portfolio_value = env.get_portfolio_value()
         writer.log_scalar('Portfolio Value', portfolio_value, episode)
-
-        # 하루가 끝날때마다(episode가 끝날때마다) train
-        # if len(agent.replay_buffer) > batch_size:
         agent.train()
 
         # 주기적으로 모델 저장
         if episode % 100 == 0:
-            agent.save(f"models/td3_model_{episode}")
+            agent.save(f"models/ddpg_model_{episode}")
         if finished:
-            agent.save(f"models/td3_model_{episode}")
+            agent.save(f"models/ddpg_model_{episode}")
             break
 
     writer.close()

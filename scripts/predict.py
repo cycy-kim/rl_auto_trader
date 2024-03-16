@@ -1,4 +1,4 @@
-from agent.agent import TD3Agent
+from agents.td3_agent import TD3Agent
 import datetime
 
 from environment.real_environment import RealEnvironment

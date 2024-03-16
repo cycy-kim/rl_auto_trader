@@ -1,4 +1,4 @@
-from agent.agent import TD3Agent
+from agents.td3_agent import TD3Agent
 from environment.train_environment import TrainEnvironment
 from utils.data_utils import load_data
 from utils.visualizer import TensorBoardLogger

@@ -23,13 +23,30 @@ if __name__ == "__main__":
     train_parser.add_argument('--initial_balance', type=float, required=True, \
         help="Specify the initial balance for the trading account used in training. For example, '10000' for an initial balance of 10,000won.")
     # train parameters
-    train_parser.add_argument('--sequence_length', type=int, default=8)
-    train_parser.add_argument('--iterations', type=int, default=100)
-    train_parser.add_argument('--batch_size', type=int, default=100)
-    train_parser.add_argument('--discount', type=float, default=0.99)
+    # train_parser.add_argument('--sequence_length', type=int, default=8)
+    # train_parser.add_argument('--iterations', type=int, default=100)
+    # train_parser.add_argument('--batch_size', type=int, default=100)
+    # train_parser.add_argument('--discount', type=float, default=0.99)
+    # train_parser.add_argument('--tau', type=float, default=0.005)
+    # train_parser.add_argument('--noise_clip',type=float, default=0.7)
+    # train_parser.add_argument('--policy_freq', type=int, default=2)
+
+    # train_parser.add_argument('--clip_param', type=float, default=0.2)
+    # train_parser.add_argument('--ppo_update_times', type=int, default=100)
+    # train_parser.add_argument('--batch_size', type=int, default=64)
+    # train_parser.add_argument('--sub_batch_size', type=int, default=64)
+    # train_parser.add_argument('--buffer_size', type=int, default=1000000)
+    # train_parser.add_argument('--gamma',type=float, default=0.99)
+    # train_parser.add_argument('--lmbda', type=float, default=0.95)
+    # train_parser.add_argument('--entropy_eps', type=float, default=1e-4)
+    # train_parser.add_argument('--lr', type=float, default=1e-3)
+
+    train_parser.add_argument('--actor_lr', type=float, default=1e-4)
+    train_parser.add_argument('--critic_lr', type=float, default=1e-3)
+    train_parser.add_argument('--gamma', type=float, default=0.99)
     train_parser.add_argument('--tau', type=float, default=0.005)
-    train_parser.add_argument('--noise_clip',type=float, default=0.7)
-    train_parser.add_argument('--policy_freq', type=int, default=2)
+    train_parser.add_argument('--buffer_size', type=int, default=1000000)
+    train_parser.add_argument('--batch_size', type=int, default=64)
 
     # test
     test_parser = subparsers.add_parser('test', help='Test mode help')
@@ -61,13 +78,20 @@ if __name__ == "__main__":
         assert os.path.isfile(data_path), f"The data file '{args.data_name}' does not exist in the 'data/' directory."
 
     train_hyperparameters = {
-        'sequence_length': getattr(args, 'sequence_length', 8),
-        'iterations': getattr(args, 'iterations', 100),
-        'batch_size': getattr(args, 'batch_size', 100),
-        'discount': getattr(args, 'discount', 0.99),
-        'tau': getattr(args, 'tau', 0.005),
-        'noise_clip': getattr(args, 'noise_clip', 0.7),
-        'policy_freq': getattr(args, 'policy_freq', 2),
+        # 'sequence_length': getattr(args, 'sequence_length', 8),
+        # 'iterations': getattr(args, 'iterations', 100),
+        # 'batch_size': getattr(args, 'batch_size', 100),
+        # 'discount': getattr(args, 'discount', 0.99),
+        # 'tau': getattr(args, 'tau', 0.005),
+        # 'noise_clip': getattr(args, 'noise_clip', 0.7),
+        # 'policy_freq': getattr(args, 'policy_freq', 2),
+
+        'actor_lr': getattr(args, 'actor_lr'),
+        'critic_lr': getattr(args, 'critic_lr'),
+        'batch_size': getattr(args, 'batch_size'),
+        'gamma': getattr(args, 'gamma'),
+        'tau': getattr(args, 'tau'),
+        'buffer_size': getattr(args, 'buffer_size'),
     }
 
     load_dotenv()
