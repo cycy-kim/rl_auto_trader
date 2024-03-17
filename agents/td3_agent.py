@@ -14,8 +14,6 @@ from utils.gaussian_noise import GaussianNoise
 class TD3Agent(BaseAgent):
     def __init__(self, state_dim, action_dim, **params):
         super(TD3Agent, self).__init__(state_dim, action_dim)
-        # self.state_dim = state_dim
-        # self.action_dim = action_dim
 
         self.sequence_length = params.get('sequence_length')
         self.iterations = params.get('iterations')

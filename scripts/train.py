@@ -19,9 +19,9 @@ def train(data_name, initial_balance, log=True, **params):
     action_dim = env.ACTION_SPACE
 
     # TD3 에이전트 생성
-    # agent = TD3Agent(state_dim, action_dim, **params)
+    agent = TD3Agent(state_dim, action_dim, **params)
     # agent = PPOAgent(state_dim, action_dim, **params)
-    agent = DDPGAgent(state_dim, action_dim, **params)
+    # agent = DDPGAgent(state_dim, action_dim, **params)
     total_episode = 10000  # 총 학습 반복 횟수
 
     # 학습 루프
@@ -49,15 +49,17 @@ def train(data_name, initial_balance, log=True, **params):
             state = next_state
             minutes += 1
 
+
         portfolio_value = env.get_portfolio_value()
+        writer.log_scalar('Reward', total_reward, episode)
         writer.log_scalar('Portfolio Value', portfolio_value, episode)
         agent.train()
 
         # 주기적으로 모델 저장
         if episode % 100 == 0:
-            agent.save(f"models/ddpg_model_{episode}")
+            agent.save(f"models/td3_model_{episode}")
         if finished:
-            agent.save(f"models/ddpg_model_{episode}")
+            agent.save(f"models/td3_model_{episode}")
             break
 
     writer.close()
